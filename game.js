@@ -57,10 +57,27 @@ function nextSequence() {
     // add in the random color
     gamePattern.push(randomChosenColor);
 
+    // animate flash for every color in the gamePattern array for each round instead of just flashing the most recently added one
+    // do this by using the gamePattern array
+    // Also need to implement delay for each animation
+    // ****For some reason, I can't get this for loop to call the 2 animate functions because the parameter is undefined?
+    // for (var i = 0; i < gamePattern.length; i++) {
+    //     console.log("Before timeout");
+    //     setTimeout(function () {
+    //         console.log(gamePattern);
+    //         console.log(gamePattern[i]);
+    //         // Animate the flash for the color
+    //         animateFlash(gamePattern[i]);
+    //         // also play sound when that color is selected
+    //         playSound(gamePattern[i]);
+    //     }, 900);
+    // }
+
+    // For now, we will just animate the most recently added color to the game pattern
     // Animate the flash for the color
-    animateFlash(randomChosenColor);
+    animateFlash(gamePattern[gamePattern.length-1]);
     // also play sound when that color is selected
-    playSound(randomChosenColor);
+    playSound(gamePattern[gamePattern.length-1]);
     
 }
 
