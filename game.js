@@ -141,3 +141,5 @@ function startOver() {
     started = false;
 }
 
+// Add in a button to test what the incorrect sound sounds like that the user can click.
+// Also implement something that doesn't call the incorrect sound when the game didn't even start yet (use an if statement or something in the keypress section).
