@@ -3,6 +3,25 @@ var buttonColors = ["red", "blue", "green", "yellow"];
 var gamePattern = [];
 var userClickedPattern = [];
 
+// also create a started variable
+var started = false;
+var level = 0;
+
+// starting the game after the ENTER key is pressed
+$(document).keypress(function(e) {
+    if (e.key === "Enter" && started === false){
+        nextSequence();
+        // when game starts, change the h1 to say what level we are on
+        $("h1").html("Level " + level);
+
+        started = true;
+    
+    }
+});
+
+
+
+// call this when a user clicks a button
 // when calling the click function on the class btn, don't forget to use a period
 $(".btn").on("click", function(e) {
     console.log(e);
@@ -14,10 +33,24 @@ $(".btn").on("click", function(e) {
     playSound(userChosenColor);
     // and play the animation as well
     animateFlash(userChosenColor);
+
+
+    // call check answer after a user has clicked
+    checkAnswer(userClickedPattern.length - 1);
 });
 
 // The nextSequence function generates a random color to be added into the sequence
 function nextSequence() {
+
+    // Once nextSequence() is triggered, reset the userClickedPattern to an empty array ready for the next level.
+    // Always start the game by initializing an empty userClickedPattern array
+    userClickedPattern = [];
+
+    level++;
+    // we have the initial update to the h1 right when the game starts and then we use this one now for the rest of the game
+    $("#level-title").text("Level " + level);
+
+
     var randomNumber = Math.floor((Math.random() * 4));
     var randomChosenColor = buttonColors[randomNumber];
 
@@ -48,4 +81,24 @@ function animateFlash(color) {
     setTimeout(function(){
         $("#" + color).removeClass("pressed");
     }, 100);
+}
+
+// create a check answer function
+// current level is the most recent index of the most recent clicked color. And this function would be called everytime a user clicks on a button.
+function checkAnswer(currentLevel) {
+    if (gamePattern[currentLevel] === userClickedPattern[currentLevel]) {
+        console.log("Correct");
+
+        // If the user got the most recent answer right, then check that they have finished their sequence with another if statement.
+        if (userClickedPattern.length === gamePattern.length){
+
+            // Call nextSequence() after a 1000 millisecond delay.
+            setTimeout(function () {
+                nextSequence();
+            }, 900);
+        }
+    } else {
+        console.log("Incorrect");
+        playSound("wrong");
+    }
 }
