@@ -7,6 +7,7 @@ var userClickedPattern = [];
 $(".btn").on("click", function(e) {
     console.log(e);
     var userChosenColor = e.target.id;
+    // Also could've done this: var userChosenColour = $(this).attr("id");
     userClickedPattern.push(userChosenColor);
 
     // also want to play a sound when they click something
@@ -14,8 +15,6 @@ $(".btn").on("click", function(e) {
     // and play the animation as well
     animateFlash(userChosenColor);
 });
-
-nextSequence();
 
 // The nextSequence function generates a random color to be added into the sequence
 function nextSequence() {
@@ -38,7 +37,15 @@ function playSound(color) {
     audio.play();
 }
 
+// I decided to use both methods for flashing because it looks better
 function animateFlash(color) {
-    // use the # to select the id of the button
+    // use the # to select the id of the button and use the fading features for the flash animation
     $("#" + color).fadeIn(100).fadeOut(100).fadeIn(100);
+
+    // use our pressed class for animation
+    $("#" + color).addClass("pressed");
+    // and then remove it after a certain amount of time for the flash effect
+    setTimeout(function(){
+        $("#" + color).removeClass("pressed");
+    }, 100);
 }
