@@ -10,12 +10,12 @@ var level = 0;
 // starting the game after the ENTER key is pressed
 $(document).keypress(function(e) {
     if (e.key === "Enter" && started === false){
-        nextSequence();
-        // when game starts, change the h1 to say what level we are on
-        $("h1").html("Level " + level);
+        // when game starts, change the h1 to say what level we are on. Don't really need this since we already do it in the beginning of 
+        // calling nextSequence
+        // $("h1").html("Level " + level);
 
         started = true;
-    
+        nextSequence();
     }
 });
 
@@ -116,6 +116,28 @@ function checkAnswer(currentLevel) {
         }
     } else {
         console.log("Incorrect");
+        // when the user gets the pattern wrong, play the "wrong" sound and flash the backgroud red
         playSound("wrong");
+        
+        // red background flash
+        $("body").addClass("game-over");
+        setTimeout(function () {
+           $("body").removeClass("game-over"); 
+        }, 200);
+
+        // change the header too
+        $("h1").html("Game Over, Press ENTER to Restart");
+
+        startOver();
     }
 }
+
+// a start over function after the user gets it wrong
+function startOver() {
+    level = 0;
+    gamePattern = [];
+
+    // when we set this variable to false, the user will be allowed to start the game with ENTER again
+    started = false;
+}
+
