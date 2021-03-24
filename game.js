@@ -11,6 +11,8 @@ $(".btn").on("click", function(e) {
 
     // also want to play a sound when they click something
     playSound(userChosenColor);
+    // and play the animation as well
+    animateFlash(userChosenColor);
 });
 
 nextSequence();
@@ -24,7 +26,7 @@ function nextSequence() {
     gamePattern.push(randomChosenColor);
 
     // Animate the flash for the color
-    $("#" + randomChosenColor).fadeIn(100).fadeOut(100).fadeIn(100);
+    animateFlash(randomChosenColor);
     // also play sound when that color is selected
     playSound(randomChosenColor);
     
@@ -34,4 +36,9 @@ function nextSequence() {
 function playSound(color) {
     var audio = new Audio("sounds/" + color + ".mp3");
     audio.play();
+}
+
+function animateFlash(color) {
+    // use the # to select the id of the button
+    $("#" + color).fadeIn(100).fadeOut(100).fadeIn(100);
 }
